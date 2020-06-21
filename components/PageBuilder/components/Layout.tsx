@@ -1,28 +1,22 @@
-import { WidthProvider, Responsive } from "react-grid-layout";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Input } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 
 const renderComponentByKey = (key, layout) => {
+  const { style } = layout;
   switch (key) {
     case "Button":
-      const { style } = layout;
-      return (
-        <Button block {...style}>
-          Primary Button
-        </Button>
-      );
+      return <Button {...style}>{style.text}</Button>;
     case "TextInput":
-      return <Input />;
+      const TextInput = style.type === "text" ? Input : TextArea;
+
+      return <TextInput autoSize={{ minRows: 1, maxRows: 3 }} {...style} />;
     default:
       return <div />;
   }
 };
 
 const Layout = ({ layout }: { layout: any }) => {
-  return (
-    <div key={layout.i} data-grid={layout}>
-      {renderComponentByKey(layout.key, layout)}
-    </div>
-  );
+  return renderComponentByKey(layout.key, layout);
 };
 export default Layout;

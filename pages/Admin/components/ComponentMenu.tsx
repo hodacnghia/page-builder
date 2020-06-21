@@ -6,21 +6,23 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
+import { Box } from "@xstyled/styled-components";
 
-const ComponentMenu = ({ createLayout }) => {
+const ComponentMenu = ({ createLayout, onUndo, onRedo }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
 
-  const onClick = ({ item, key, keyPath, domEvent }) => {
+  const onClick = ({ key }) => {
     const props =
       key === "Button"
         ? {
             style: {
-              size: "medium",
+              size: "middle",
               type: "primary",
+              text: "Button",
             },
             containerStyle: {
               justifyContent: "center",
@@ -28,6 +30,9 @@ const ComponentMenu = ({ createLayout }) => {
             },
           }
         : {
+            style: {
+              type: "text",
+            },
             containerStyle: {
               justifyContent: "center",
               alignItems: "center",
@@ -37,16 +42,22 @@ const ComponentMenu = ({ createLayout }) => {
   };
   return (
     <div>
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{ marginBottom: 16 }}
-      >
-        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-      </Button>
+      <Box display="flex" flex={1} pb={5} justifyContent="space-between">
+        <Button type="primary" onClick={toggleCollapsed}>
+          {React.createElement(
+            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined
+          )}
+        </Button>
+        <Button type="primary" onClick={onUndo}>
+          Undo
+        </Button>
+
+        <Button type="primary" onClick={onRedo}>
+          Redo
+        </Button>
+      </Box>
+
       <Menu
-        // defaultSelectedKeys={["1"]}
-        // defaultOpenKeys={["sub1"]}
         mode="inline"
         theme="light"
         inlineCollapsed={collapsed}

@@ -1,30 +1,38 @@
-import { WidthProvider, Responsive } from "react-grid-layout";
+import GridLayout, { WidthProvider, Responsive } from "react-grid-layout";
 import React from "react";
-import { map } from "lodash";
+import { map, isEqual } from "lodash";
 import Layout from "./components/Layout";
 
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+const ResponsiveReactGridLayout = WidthProvider(GridLayout);
 
-const PageBuilder = ({ onLayoutClick, layouts, layoutFocus }: any) => {
+const PageBuilder = ({
+  onLayoutClick,
+  layouts,
+  updateLayout,
+  layoutFocus,
+  layoutsMapData,
+}: any) => {
   const onItemClick = (key) => () => {
     onLayoutClick(key);
   };
   const generateDOM = () => {
     // Generate items with properties from the layout, rather than pass the layout directly
 
-    return map(layouts, function (l) {
+    return map(layouts, function (item) {
+      const layout = layoutsMapData[item];
       return (
         <div
-          onClick={onItemClick(l.i)}
-          key={l.i}
-          data-grid={l}
+          onClick={onItemClick(layout.i)}
+          key={layout.i}
+          data-grid={layout}
           style={{
             display: "flex",
-            border: layoutFocus === l.i ? "1px solid red" : "",
-            ...l.containerStyle,
+            flex: 1,
+            border: layoutFocus === layout.i ? "1px solid red" : "",
+            ...layout.containerStyle,
           }}
         >
-          <Layout key={l.i} layout={l} />{" "}
+          <Layout key={layout.i} layout={layout} />{" "}
         </div>
       );
     });
@@ -32,11 +40,18 @@ const PageBuilder = ({ onLayoutClick, layouts, layoutFocus }: any) => {
 
   return (
     <ResponsiveReactGridLayout
+      onLayoutChange={(layout) => {
+        console.log(layout);
+        console.log(layoutsMapData[layout.i]);
+        if (isEqual(layout, layoutsMapData[layout.i])) return;
+        console.log("onLayoutChange");
+        updateLayout(layout);
+      }}
       className="layout"
       rowHeight={60}
-      width={500}
-      // isResizable
+      width={900}
       isDraggable
+      cols={10}
       // cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
       {generateDOM()}

@@ -3,12 +3,17 @@ import ComponentMenu from "./components/ComponentMenu";
 import { Box } from "@xstyled/styled-components";
 import { useState, useEffect } from "react";
 import EditLayoutMenu from "./components/EditLayoutMenu";
+import { useHistory } from "hooks/useHistory";
 
 export default () => {
   const [loaded, setLoaded] = useState(false);
   const [layoutFocus, setLayoutFocus] = useState(null);
   const [layouts, setLayouts] = useState<any>([]);
   const [layoutsMapData, setLayoutsMapData] = useState<any>([]);
+  const { onSaveHistory, onUndo, onRedo } = useHistory({
+    setLayouts,
+    setLayoutsMapData,
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoaded(true);
@@ -18,7 +23,7 @@ export default () => {
   const createLayout = (key, props = {}) => {
     const i = "n" + new Date().toISOString();
     const newData = {
-      i: "n" + new Date().toISOString(),
+      i,
       x: 0,
       y: 0, // puts it at the bottom
       w: 2,
@@ -26,16 +31,31 @@ export default () => {
       key,
       ...props,
     };
-    setLayouts([...layouts, newData]);
+    setLayouts([...layouts, i]);
     setLayoutsMapData({
       ...layoutsMapData,
       [i]: newData,
     });
+    // onSaveHistory({
+    //   layouts: [...layouts, i],
+    //   layoutsMapData: {
+    //     ...layoutsMapData,
+    //     [i]: newData,
+    //   },
+    // });
   };
+  
   const updateLayout = (layout) => {
     setLayoutsMapData({
       ...layoutsMapData,
-      [layout.i]: layout,
+      [layout.i]: { ...layoutsMapData[layout.i], ...layout },
+    });
+    onSaveHistory({
+      layouts,
+      layoutsMapData: {
+        ...layoutsMapData,
+        [layout.i]: { ...layoutsMapData[layout.i], ...layout },
+      },
     });
   };
   const onLayoutClick = (key) => {
@@ -46,12 +66,10 @@ export default () => {
   };
 
   return (
-    <Box
-      display={loaded ? "flex" : "block"}
-      style={{ maxWidth: 1200 }}
-      opacity={loaded ? 1 : 0}
-    >
-      <ComponentMenu createLayout={createLayout} />
+    <Box display={loaded ? "flex" : "block"} opacity={loaded ? 1 : 0}>
+      <Box width={300}>
+        <ComponentMenu createLayout={createLayout} {...{ onUndo, onRedo }} />
+      </Box>
       <Box
         px={20}
         opacity={loaded ? 1 : 0}
@@ -60,7 +78,7 @@ export default () => {
             ? {
                 display: "flex",
                 flex: 1,
-
+                minWidth: 900,
               }
             : {}
         }
@@ -69,6 +87,8 @@ export default () => {
           layoutFocus={layoutFocus}
           onLayoutClick={onLayoutClick}
           layouts={layouts}
+          updateLayout={updateLayout}
+          layoutsMapData={layoutsMapData}
         />
       </Box>
       <Box width={300}>

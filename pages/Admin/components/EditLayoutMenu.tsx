@@ -1,43 +1,27 @@
-import { Menu, Button } from "antd";
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  DownSquareOutlined,
-  EditOutlined,
-} from "@ant-design/icons";
-import React, { useState } from "react";
-import EditLayoutBtntMenu from "./EditLayoutBtntMenu";
+import React from "react";
+import EditLayoutBtnMenu from "./EditLayoutBtnMenu";
+import EditLayoutInputMenu from "./EditLayoutInputMenu";
+import { Box } from "@xstyled/styled-components";
 
 const renderComponentByKey = (key, props) => {
   switch (key) {
     case "Button":
-      return <EditLayoutBtntMenu {...props} />;
+      return <EditLayoutBtnMenu {...props} />;
     case "TextInput":
-      return <div />;
+      return <EditLayoutInputMenu {...props} />;
     default:
       return <div />;
   }
 };
 
 const EditLayoutMenu = ({ updateLayout, currentLayout, layoutFocus }) => {
-  const [collapsed, setCollapsed] = useState(false);
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const onClick = ({ item, key, keyPath, domEvent }) => {
-    updateLayout(key);
-  };
-  console.log(currentLayout, "currentLayout");
   return (
-    <>
-      {JSON.stringify(currentLayout)}
+    <Box p={2}>
       {renderComponentByKey(currentLayout?.key, {
         currentLayout,
         updateLayout,
       })}
-    </>
+    </Box>
   );
 };
 export default EditLayoutMenu;
