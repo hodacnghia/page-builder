@@ -1,15 +1,29 @@
 {
-  "name": "nextjs-blog",
+  "name": "page-builder",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "PORT=3000 node server.js",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.155",
+    "@xstyled/styled-components": "^1.17.1",
+    "antd": "^4.3.4",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
     "next": "9.4.4",
+    "next-routes": "^1.4.2",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-grid-layout": "^0.18.3",
+    "styled-components": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "@types/react": "^16.9.38",
+    "typescript": "^3.9.5"
   }
 }
