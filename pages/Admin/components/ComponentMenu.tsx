@@ -1,59 +1,65 @@
 import { Menu, Button } from "antd";
 import {
-  AppstoreOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined,
+  DownSquareOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
-import React from "react";
+import React, { useState } from "react";
 
-const { SubMenu } = Menu;
+const ComponentMenu = ({ createLayout }) => {
+  const [collapsed, setCollapsed] = useState(false);
 
-class ComponentMenu extends React.Component {
-  state = {
-    collapsed: false,
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
   };
 
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
+  const onClick = ({ item, key, keyPath, domEvent }) => {
+    const props =
+      key === "Button"
+        ? {
+            style: {
+              size: "medium",
+              type: "primary",
+            },
+            containerStyle: {
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          }
+        : {
+            containerStyle: {
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          };
+    createLayout(key, props);
   };
-
-  render() {
-    return (
-      <div>
-        <Button
-          type="primary"
-          onClick={this.toggleCollapsed}
-          style={{ marginBottom: 16 }}
-        >
-          {React.createElement(
-            this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined
-          )}
-        </Button>
-        <Menu
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
-          mode="inline"
-          theme="light"
-          inlineCollapsed={this.state.collapsed}
-        >
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Option 1
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Option 2
-          </Menu.Item>
-          <Menu.Item key="3" icon={<ContainerOutlined />}>
-            Option 3
-          </Menu.Item>
-        </Menu>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Button
+        type="primary"
+        onClick={toggleCollapsed}
+        style={{ marginBottom: 16 }}
+      >
+        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
+      </Button>
+      <Menu
+        // defaultSelectedKeys={["1"]}
+        // defaultOpenKeys={["sub1"]}
+        mode="inline"
+        theme="light"
+        inlineCollapsed={collapsed}
+        onClick={onClick}
+      >
+        <Menu.Item key="Button" icon={<DownSquareOutlined />}>
+          Button
+        </Menu.Item>
+        <Menu.Item key="TextInput" icon={<EditOutlined />}>
+          Text Input
+        </Menu.Item>
+      </Menu>
+    </div>
+  );
+};
 export default ComponentMenu;
