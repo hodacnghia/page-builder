@@ -17,11 +17,8 @@ const PageBuilder = ({
     onLayoutClick(key);
   };
   const generateDOM = () => {
-    // Generate items with properties from the layout, rather than pass the layout directly
-
-    return map(layouts, function (item) {
-      const layout = layoutsMapData[item];
-      console.log(layout, "????????????");
+    const h = layouts.map((item) => ({ ...layoutsMapData[item] }));
+    return map(h, function (layout) {
       return (
         <div
           onClick={onItemClick(layout.i)}
@@ -39,16 +36,12 @@ const PageBuilder = ({
       );
     });
   };
-
+  console.log(
+    layouts.map((item) => ({ ...layoutsMapData?.[item] })),
+    "layouts.map((item) => ({ ...layoutsMapData[item] })"
+  );
   return (
     <GridLayout
-      // onLayoutChange={(layout) => {
-      //   console.log(layout);
-      //   console.log(layoutsMapData[layout.i]);
-      //   if (isEqual(layout, layoutsMapData[layout.i])) return;
-      //   console.log("onLayoutChange");
-      //   updateLayout(layout);
-      // }}
       onDragStop={(layout) => {
         console.log(layout, "drag stop");
         updateLayout(layout);
@@ -62,7 +55,7 @@ const PageBuilder = ({
       width={900}
       isDraggable
       cols={10}
-      // cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+      layout={layouts.map((item) => ({ ...layoutsMapData[item] }))}
     >
       {generateDOM()}
     </GridLayout>

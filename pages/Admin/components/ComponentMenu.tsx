@@ -1,14 +1,21 @@
-import { Menu, Button } from "antd";
+import { Menu, Button, Upload } from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   DownSquareOutlined,
+  UploadOutlined,
   EditOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
 import { Box } from "@xstyled/styled-components";
 
-const ComponentMenu = ({ createLayout, onUndo, onRedo }) => {
+const ComponentMenu = ({
+  createLayout,
+  onUndo,
+  onRedo,
+  onSave,
+  importFile,
+}) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
@@ -40,6 +47,7 @@ const ComponentMenu = ({ createLayout, onUndo, onRedo }) => {
           };
     createLayout(key, props);
   };
+
   return (
     <div>
       <Box display="flex" flex={1} pb={5} justifyContent="space-between">
@@ -56,6 +64,15 @@ const ComponentMenu = ({ createLayout, onUndo, onRedo }) => {
           Redo
         </Button>
       </Box>
+      <Upload beforeUpload={importFile}>
+        <Button>
+          <UploadOutlined /> Upload
+        </Button>
+      </Upload>
+
+      <Button type="primary" onClick={onSave}>
+        Save
+      </Button>
 
       <Menu
         mode="inline"

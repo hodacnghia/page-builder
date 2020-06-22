@@ -7,13 +7,14 @@ export const useHistory = ({ setLayouts, setLayoutsMapData }) => {
     future: [],
   });
   console.log(history, "historyhistoryhistoryhistory");
-  const onSaveHistory = (present) => {
+  const onSaveHistory = (present, resetFuture: boolean | undefined = false) => {
     const past = [...history.past, history.present];
     setHistory({
       ...history,
       ...{
         past,
         present,
+        future: resetFuture ? [] : history.future,
       },
     });
   };

@@ -11,7 +11,7 @@ export default () => {
   const [layoutFocus, setLayoutFocus] = useState(null);
   const [layouts, setLayouts] = useState<any>([]);
   const [layoutsMapData, setLayoutsMapData] = useState<any>([]);
-  const { onSaveHistory, onUndo, onRedo } = useHistory({
+  const { onSaveHistory, onUndo, onRedo, history } = useHistory({
     setLayouts,
     setLayoutsMapData,
   });
@@ -21,29 +21,62 @@ export default () => {
     }, 500);
   }, []);
 
+  const onSave = () => {
+    const obj = history.present;
+    const blob = new Blob([JSON.stringify(obj, null, 2)], {
+      type: "application/json",
+    });
+    console.log(blob, "jijijijijij");
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `Daily_FS_Secondary_Sales_Report.json`;
+    link.click();
+  };
+  const importFile = (file) => {
+    console.log(event,'event')
+    if (!file) return;
+    setLayoutsMapData({});
+    setLayouts([]);
+    const reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(file);
+  };
+  const onReaderLoad = (event) => {
+    try {
+      var obj = JSON.parse(event.target.result);
+
+
+      onSaveHistory(obj);
+      setLayoutsMapData(obj.layoutsMapData);
+      setLayouts(obj.layouts);
+    } catch (error) {}
+  };
   const createLayout = (key, props = {}) => {
     const i = "n" + new Date().toISOString();
     const newData = {
+      ...props,
       i,
       x: 0,
       y: 0, // puts it at the bottom
       w: 2,
       h: 1,
       key,
-      ...props,
     };
     setLayouts([...layouts, i]);
     setLayoutsMapData({
       ...layoutsMapData,
       [i]: newData,
     });
-    onSaveHistory({
-      layouts: [...layouts, i],
-      layoutsMapData: {
-        ...layoutsMapData,
-        [i]: newData,
+    onSaveHistory(
+      {
+        layouts: [...layouts, i],
+        layoutsMapData: {
+          ...layoutsMapData,
+          [i]: newData,
+        },
       },
-    });
+      true
+    );
   };
 
   const updateLayout = (newLayouts) => {
@@ -55,11 +88,24 @@ export default () => {
       },
       {}
     );
-    console.log(newLayoutsMapData,'newLayoutsMapData')
+
     setLayoutsMapData(newLayoutsMapData);
     onSaveHistory({
       layouts,
       layoutsMapData: newLayoutsMapData,
+    });
+  };
+  const updateStyleLayout = (layout) => {
+    setLayoutsMapData({
+      ...layoutsMapData,
+      [layout.i]: { ...layoutsMapData[layout.i], ...layout },
+    });
+    onSaveHistory({
+      layouts,
+      layoutsMapData: {
+        ...layoutsMapData,
+        [layout.i]: { ...layoutsMapData[layout.i], ...layout },
+      },
     });
   };
   const onLayoutClick = (key) => {
@@ -70,9 +116,12 @@ export default () => {
   };
 
   return (
-    <Box display={loaded ? "flex" : "block"} opacity={loaded ? 1 : 0}>
+    <Box display={loaded ? "flex" : "block"} p={2} opacity={loaded ? 1 : 0}>
       <Box width={300}>
-        <ComponentMenu createLayout={createLayout} {...{ onUndo, onRedo }} />
+        <ComponentMenu
+          createLayout={createLayout}
+          {...{ onUndo, onRedo, onSave, importFile }}
+        />
       </Box>
       <Box
         px={20}
@@ -97,7 +146,7 @@ export default () => {
       </Box>
       <Box width={300}>
         <EditLayoutMenu
-          updateLayout={updateLayout}
+          updateLayout={updateStyleLayout}
           layoutFocus={layoutFocus}
           currentLayout={layoutsMapData?.[layoutFocus] || null}
         />

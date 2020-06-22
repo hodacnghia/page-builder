@@ -59,7 +59,7 @@ const EditLayoutBtnMenu = ({ updateLayout, currentLayout }) => {
         />
         <InformationRow
           title="Text"
-          value={style?.block}
+          value={style?.text}
           type="input"
           onChange={onChangeStyle("text")}
         />
