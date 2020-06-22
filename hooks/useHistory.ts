@@ -27,7 +27,7 @@ export const useHistory = ({ setLayouts, setLayoutsMapData }) => {
     const present = history.past[lastPastIndex];
     const past =
       lastPastIndex === 0 ? [] : history.past.slice(0, lastPastIndex);
-    console.log(past, "past");
+
     setHistory({
       ...{
         present,

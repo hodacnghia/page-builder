@@ -4,6 +4,7 @@ import { Box } from "@xstyled/styled-components";
 import { useState, useEffect } from "react";
 import EditLayoutMenu from "./components/EditLayoutMenu";
 import { useHistory } from "hooks/useHistory";
+import { reduce } from "lodash";
 
 export default () => {
   const [loaded, setLoaded] = useState(false);
@@ -36,26 +37,29 @@ export default () => {
       ...layoutsMapData,
       [i]: newData,
     });
-    // onSaveHistory({
-    //   layouts: [...layouts, i],
-    //   layoutsMapData: {
-    //     ...layoutsMapData,
-    //     [i]: newData,
-    //   },
-    // });
-  };
-  
-  const updateLayout = (layout) => {
-    setLayoutsMapData({
-      ...layoutsMapData,
-      [layout.i]: { ...layoutsMapData[layout.i], ...layout },
-    });
     onSaveHistory({
-      layouts,
+      layouts: [...layouts, i],
       layoutsMapData: {
         ...layoutsMapData,
-        [layout.i]: { ...layoutsMapData[layout.i], ...layout },
+        [i]: newData,
       },
+    });
+  };
+
+  const updateLayout = (newLayouts) => {
+    const newLayoutsMapData = reduce(
+      newLayouts,
+      (res, layout) => {
+        res[layout.i] = { ...layoutsMapData[layout.i], ...layout };
+        return res;
+      },
+      {}
+    );
+    console.log(newLayoutsMapData,'newLayoutsMapData')
+    setLayoutsMapData(newLayoutsMapData);
+    onSaveHistory({
+      layouts,
+      layoutsMapData: newLayoutsMapData,
     });
   };
   const onLayoutClick = (key) => {

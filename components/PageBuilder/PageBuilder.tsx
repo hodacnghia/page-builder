@@ -1,4 +1,4 @@
-import GridLayout, { WidthProvider, Responsive } from "react-grid-layout";
+import GridLayout, { WidthProvider } from "react-grid-layout";
 import React from "react";
 import { map, isEqual } from "lodash";
 import Layout from "./components/Layout";
@@ -12,6 +12,7 @@ const PageBuilder = ({
   layoutFocus,
   layoutsMapData,
 }: any) => {
+  console.log('render lai')
   const onItemClick = (key) => () => {
     onLayoutClick(key);
   };
@@ -20,6 +21,7 @@ const PageBuilder = ({
 
     return map(layouts, function (item) {
       const layout = layoutsMapData[item];
+      console.log(layout,'????????????')
       return (
         <div
           onClick={onItemClick(layout.i)}
@@ -40,11 +42,19 @@ const PageBuilder = ({
 
   return (
     <ResponsiveReactGridLayout
-      onLayoutChange={(layout) => {
-        console.log(layout);
-        console.log(layoutsMapData[layout.i]);
-        if (isEqual(layout, layoutsMapData[layout.i])) return;
-        console.log("onLayoutChange");
+      // onLayoutChange={(layout) => {
+      //   console.log(layout);
+      //   console.log(layoutsMapData[layout.i]);
+      //   if (isEqual(layout, layoutsMapData[layout.i])) return;
+      //   console.log("onLayoutChange");
+      //   updateLayout(layout);
+      // }}
+      onDragStop={(layout) => {
+        console.log(layout, "drag stop");
+        updateLayout(layout);
+      }}
+      onResizeStop={(layout) => {
+        console.log(layout, "resize stop");
         updateLayout(layout);
       }}
       className="layout"

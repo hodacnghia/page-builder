@@ -19,7 +19,7 @@ const alignData = [
 
 const EditLayoutInputMenu = ({ updateLayout, currentLayout }) => {
   const { style, containerStyle } = currentLayout;
-  console.log(style, "stylestyle");
+
   const onChangeStyle = (styleKey) => (value) => {
     updateLayout({
       ...currentLayout,

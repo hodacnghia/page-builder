@@ -40,7 +40,6 @@ const EditLayoutBtnMenu = ({ updateLayout, currentLayout }) => {
       },
     });
   };
-  console.log(style?.text, "style?.text");
   return (
     <Box display="flex" flexDirection="column">
       <Box>Style:</Box>
