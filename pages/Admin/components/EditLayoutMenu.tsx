@@ -14,12 +14,12 @@ const renderComponentByKey = (key, props) => {
   }
 };
 
-const EditLayoutMenu = ({ updateLayout, currentLayout, layoutFocus }) => {
+const EditLayoutMenu = ({ updateComponentStyle, focusComponent }) => {
   return (
     <Box p={2}>
-      {renderComponentByKey(currentLayout?.key, {
-        currentLayout,
-        updateLayout,
+      {renderComponentByKey(focusComponent?.key, {
+        focusComponent,
+        updateComponentStyle,
       })}
     </Box>
   );

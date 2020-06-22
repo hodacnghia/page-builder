@@ -1,39 +1,25 @@
 import React, { useMemo } from "react";
 import { Box } from "@xstyled/styled-components";
 import InformationRow from "./InformationRow";
+import { typeData, justifyData, alignData } from "../utils/constants";
 
-const typeData = [
-  { key: "textarea", label: "Textarea" },
-  { key: "text", label: "Text" },
-];
-const justifyData = [
-  { key: "center", label: "center" },
-  { key: "flex-start", label: "left" },
-  { key: "flex-end", label: "right" },
-];
-const alignData = [
-  { key: "center", label: "center" },
-  { key: "flex-start", label: "top" },
-  { key: "flex-end", label: "bottom" },
-];
-
-const EditLayoutInputMenu = ({ updateLayout, currentLayout }) => {
-  const { style, containerStyle } = currentLayout;
+const EditLayoutInputMenu = ({ updateComponentStyle, focusComponent }) => {
+  const { style, containerStyle } = focusComponent;
 
   const onChangeStyle = (styleKey) => (value) => {
-    updateLayout({
-      ...currentLayout,
+    updateComponentStyle({
+      ...focusComponent,
       style: {
-        ...currentLayout.style,
+        ...focusComponent.style,
         [styleKey]: value,
       },
     });
   };
   const onChangeContainerStyle = (styleKey) => (value) => {
-    updateLayout({
-      ...currentLayout,
+    updateComponentStyle({
+      ...focusComponent,
       containerStyle: {
-        ...currentLayout.containerStyle,
+        ...focusComponent.containerStyle,
         [styleKey]: value,
       },
     });
@@ -75,7 +61,7 @@ const EditLayoutInputMenu = ({ updateLayout, currentLayout }) => {
         </Box>
       </Box>
     ),
-    [style, containerStyle, currentLayout]
+    [style, containerStyle, focusComponent]
   );
 };
 export default EditLayoutInputMenu;

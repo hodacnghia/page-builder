@@ -46,6 +46,9 @@ const defaultTheme = {
   ],
   colors: {
     primary: "#16315A",
+    success: "#4FB994",
+    borderColor: "#e8e8e8",
+    danger: "#EE4242",
   },
 };
 

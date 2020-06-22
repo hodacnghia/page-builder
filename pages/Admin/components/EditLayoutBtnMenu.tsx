@@ -1,41 +1,26 @@
 import React from "react";
 import { Box } from "@xstyled/styled-components";
 import InformationRow from "./InformationRow";
+import { sizeData, justifyData, alignData } from "../utils/constants";
 
-const sizeData = [
-  { key: "large", label: "large" },
-  { key: "small", label: "small" },
-  { key: "middle", label: "middle" },
-];
-const justifyData = [
-  { key: "center", label: "center" },
-  { key: "flex-start", label: "left" },
-  { key: "flex-end", label: "right" },
-];
-const alignData = [
-  { key: "center", label: "center" },
-  { key: "flex-start", label: "top" },
-  { key: "flex-end", label: "bottom" },
-];
-
-const EditLayoutBtnMenu = ({ updateLayout, currentLayout }) => {
-  const { style, containerStyle } = currentLayout;
+const EditLayoutBtnMenu = ({ updateComponentStyle, focusComponent }) => {
+  const { style, containerStyle } = focusComponent;
 
   const onChangeStyle = (styleKey) => (value) => {
-    updateLayout({
-      ...currentLayout,
+    updateComponentStyle({
+      ...focusComponent,
       style: {
-        ...currentLayout.style,
+        ...focusComponent.style,
         [styleKey]: value,
       },
     });
   };
 
   const onChangeContainerStyle = (styleKey) => (value) => {
-    updateLayout({
-      ...currentLayout,
+    updateComponentStyle({
+      ...focusComponent,
       containerStyle: {
-        ...currentLayout.containerStyle,
+        ...focusComponent.containerStyle,
         [styleKey]: value,
       },
     });
@@ -53,7 +38,6 @@ const EditLayoutBtnMenu = ({ updateLayout, currentLayout }) => {
         <InformationRow
           title="Block"
           value={style?.block}
-          data={sizeData}
           type="checkbox"
           onChange={onChangeStyle("block")}
         />

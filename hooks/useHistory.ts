@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-export const useHistory = ({ setLayouts, setLayoutsMapData }) => {
+export const useHistory = ({ setLayout, setLayoutMapData }) => {
   const [history, setHistory] = useState({
     past: [],
     present: null,
     future: [],
   });
-  console.log(history, "historyhistoryhistoryhistory");
+
   const onSaveHistory = (present, resetFuture: boolean | undefined = false) => {
     const past = [...history.past, history.present];
     setHistory({
@@ -37,8 +37,8 @@ export const useHistory = ({ setLayouts, setLayoutsMapData }) => {
       },
     });
 
-    setLayouts(present?.layouts || []);
-    setLayoutsMapData(present?.layoutsMapData || {});
+    setLayout(present?.layouts || []);
+    setLayoutMapData(present?.layoutsMapData || {});
   };
 
   const onRedo = () => {
@@ -56,8 +56,8 @@ export const useHistory = ({ setLayouts, setLayoutsMapData }) => {
       },
     });
 
-    setLayouts(present?.layouts);
-    setLayoutsMapData(present?.layoutsMapData);
+    setLayout(present?.layouts);
+    setLayoutMapData(present?.layoutsMapData);
   };
   return {
     onUndo,
