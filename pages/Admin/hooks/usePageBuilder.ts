@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "hooks/useHistory";
-import { reduce } from "lodash";
+import { reduce, filter, throttle } from "lodash";
 
 export default () => {
   const [focusComponentId, setFocusedComponentId] = useState(null);
@@ -10,7 +10,7 @@ export default () => {
     setLayout,
     setLayoutMapData,
   });
-
+  console.log(history, "history");
   const saveLayout = () => {
     const obj = history.present;
     const blob = new Blob([JSON.stringify(obj, null, 2)], {
@@ -19,9 +19,10 @@ export default () => {
 
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.download = `Daily_FS_Secondary_Sales_Report.json`;
+    link.download = `layout-build${new Date().toISOString()}.json`;
     link.click();
   };
+
   const importFile = (file) => {
     if (!file) return;
     setLayoutMapData({});
@@ -32,8 +33,8 @@ export default () => {
         var obj = JSON.parse(event.target.result);
 
         onSaveHistory(obj);
-        setLayoutMapData(obj.layoutsMapData);
-        setLayout(obj.layouts);
+        setLayoutMapData(obj.layoutMapData);
+        setLayout(obj.layout);
       } catch (error) {}
     };
     reader.readAsText(file);
@@ -57,11 +58,23 @@ export default () => {
     });
     onSaveHistory(
       {
-        layouts: [...layout, i],
-        layoutsMapData: {
+        layout: [...layout, i],
+        layoutMapData: {
           ...layoutMapData,
           [i]: newData,
         },
+      },
+      true
+    );
+  };
+
+  const deleteLayout = () => {
+    setLayout([]);
+    setLayoutMapData({});
+    onSaveHistory(
+      {
+        layout: [],
+        layoutMapData: {},
       },
       true
     );
@@ -79,20 +92,21 @@ export default () => {
 
     setLayoutMapData(newLayoutsMapData);
     onSaveHistory({
-      layouts: layout,
-      layoutsMapData: newLayoutsMapData,
+      layout,
+      layoutMapData: newLayoutsMapData,
     });
   };
-  const updateComponentStyle = (layout) => {
+  const updateComponentStyle = (component) => {
+    console.log(component, "layoutlayout");
     setLayoutMapData({
       ...layoutMapData,
-      [layout.i]: { ...layoutMapData[layout.i], ...layout },
+      [component.i]: { ...layoutMapData[component.i], ...component },
     });
     onSaveHistory({
-      layouts: layout,
-      layoutsMapData: {
+      layout: component,
+      layoutMapData: {
         ...layoutMapData,
-        [layout.i]: { ...layoutMapData[layout.i], ...layout },
+        [component.i]: { ...layoutMapData[component.i], ...component },
       },
     });
   };
@@ -102,18 +116,35 @@ export default () => {
     }
     setFocusedComponentId(key);
   };
-
+  const deleteComponent = (focusComponent) => {
+    const newLayout = filter(layout, (compId) => compId !== focusComponent.i);
+    console.log(newLayout, "newLayout");
+    const newLayoutsMapData = layoutMapData;
+    delete newLayoutsMapData[focusComponent.i];
+    setLayout(newLayout);
+    setLayoutMapData(newLayoutsMapData);
+    onSaveHistory(
+      {
+        layout: newLayout,
+        layoutMapData: newLayoutsMapData,
+      },
+      true
+    );
+  };
   return {
     saveLayout,
+    deleteLayout,
     importFile,
     createComponent,
     updateComponent,
     updateComponentStyle,
     setFocusComponent,
-    undoLayout: onUndo,
-    redoLayout: onRedo,
+    undoLayout: throttle(onUndo, 1000),
+    redoLayout: throttle(onRedo, 1000),
     focusComponentId,
     layout,
     layoutMapData,
+    history,
+    deleteComponent,
   };
 };

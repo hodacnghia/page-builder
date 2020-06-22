@@ -1,16 +1,27 @@
 import "node_modules/react-grid-layout/css/styles.css";
 import "node_modules/react-resizable/css/styles.css";
 import "antd/dist/antd.css";
-import AdminPage from "./Admin/AdminPage";
-import Header from "./layouts/Header";
 import ThemeProvider from "components/Themes/ThemeProvider";
+import { AppInitialProps } from "next/dist/next-server/lib/utils";
 
-const Home = () => {
+const App = ({ Component, pageProps }) => {
   return (
     <ThemeProvider>
-      <Header />
-      <AdminPage />
+      <Component {...pageProps} />
     </ThemeProvider>
   );
 };
-export default Home;
+App.getInitialProps = async ({
+  Component,
+  ctx,
+}): Promise<AppInitialProps & { locale: string; messages: any }> => {
+  if (ctx.isServer) {
+  }
+
+  const pageProps = Component.getInitialProps
+    ? await Component.getInitialProps(ctx)
+    : {};
+
+  return { pageProps } as any;
+};
+export default App;

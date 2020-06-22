@@ -23,6 +23,7 @@ const ComponentMenu = ({ createComponent }) => {
               size: "middle",
               type: "primary",
               text: "Button",
+              shape: 'omitted'
             },
             containerStyle: {
               justifyContent: "center",
@@ -52,7 +53,7 @@ const ComponentMenu = ({ createComponent }) => {
       </Box>
 
       <Menu
-        // mode="inline"
+        mode="inline"
         // theme="light"
         inlineCollapsed={collapsed}
         onClick={onClick}

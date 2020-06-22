@@ -1,7 +1,12 @@
 import React from "react";
 import { Box } from "@xstyled/styled-components";
 import InformationRow from "./InformationRow";
-import { sizeData, justifyData, alignData } from "../utils/constants";
+import {
+  sizeData,
+  justifyData,
+  alignData,
+  shapeData,
+} from "../utils/constants";
 
 const EditLayoutBtnMenu = ({ updateComponentStyle, focusComponent }) => {
   const { style, containerStyle } = focusComponent;
@@ -27,13 +32,21 @@ const EditLayoutBtnMenu = ({ updateComponentStyle, focusComponent }) => {
   };
   return (
     <Box display="flex" flexDirection="column">
-      <Box>Style:</Box>
+      <Box color="primary" fontWeight={500}>
+        Style:
+      </Box>
       <Box pl={3}>
         <InformationRow
           title="Size"
           value={style?.size}
           data={sizeData}
           onItemSelected={onChangeStyle("size")}
+        />
+        <InformationRow
+          title="Shape"
+          value={style?.shape}
+          data={shapeData}
+          onItemSelected={onChangeStyle("shape")}
         />
         <InformationRow
           title="Block"
@@ -49,7 +62,9 @@ const EditLayoutBtnMenu = ({ updateComponentStyle, focusComponent }) => {
         />
       </Box>
 
-      <Box>Container Style:</Box>
+      <Box color="primary" fontWeight={500}>
+        Container Style:
+      </Box>
       <Box pl={3}>
         <InformationRow
           title="Justify"

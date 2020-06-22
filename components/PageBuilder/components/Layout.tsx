@@ -9,8 +9,9 @@ const renderComponentByKey = (key, layout) => {
       return <Button {...style}>{style.text}</Button>;
     case "TextInput":
       const TextInput = style.type === "text" ? Input : TextArea;
-
-      return <TextInput autoSize={{ minRows: 1, maxRows: 3 }} {...style} />;
+      const autoSize =
+        style.type === "text" ? {} : { autoSize: { minRows: 1, maxRows: 3 } };
+      return <TextInput {...style} {...autoSize} />;
     default:
       return <div />;
   }

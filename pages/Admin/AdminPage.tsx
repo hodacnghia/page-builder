@@ -22,6 +22,9 @@ export default () => {
     focusComponentId,
     layout,
     layoutMapData,
+    deleteLayout,
+    history,
+    deleteComponent,
   } = usePageBuilder();
 
   useEffect(() => {
@@ -33,7 +36,7 @@ export default () => {
 
   return (
     <Box display={loaded ? "flex" : "block"} p={2} opacity={loaded ? 1 : 0}>
-      <Box maxWidth={200}>
+      <Box maxWidth={200} backgroundColor="white">
         <ComponentMenu
           {...{
             createComponent,
@@ -48,17 +51,28 @@ export default () => {
         flex={1}
         opacity={loaded ? 1 : 0}
       >
-        <OptionBar {...{ undoLayout, redoLayout, saveLayout, importFile }} />
+        <OptionBar
+          {...{
+            undoLayout,
+            redoLayout,
+            saveLayout,
+            importFile,
+            deleteLayout,
+            history,
+            layout,
+          }}
+        />
         <PageBuilder
           focusComponentId={focusComponentId}
-          onLayoutClick={setFocusComponent}
+          setFocusComponent={setFocusComponent}
           layout={layout}
           updateComponent={updateComponent}
           layoutMapData={layoutMapData}
         />
       </Box>
-      <Box width={300}>
+      <Box width={200}>
         <EditLayoutMenu
+          deleteComponent={deleteComponent}
           updateComponentStyle={updateComponentStyle}
           focusComponent={layoutMapData?.[focusComponentId] || null}
         />

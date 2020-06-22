@@ -37,8 +37,8 @@ export const useHistory = ({ setLayout, setLayoutMapData }) => {
       },
     });
 
-    setLayout(present?.layouts || []);
-    setLayoutMapData(present?.layoutsMapData || {});
+    setLayout(present?.layout || []);
+    setLayoutMapData(present?.layoutMapData || {});
   };
 
   const onRedo = () => {
@@ -56,8 +56,8 @@ export const useHistory = ({ setLayout, setLayoutMapData }) => {
       },
     });
 
-    setLayout(present?.layouts);
-    setLayoutMapData(present?.layoutsMapData);
+    setLayout(present?.layout);
+    setLayoutMapData(present?.layoutMapData);
   };
   return {
     onUndo,

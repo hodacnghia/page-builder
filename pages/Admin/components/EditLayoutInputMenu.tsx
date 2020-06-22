@@ -28,7 +28,9 @@ const EditLayoutInputMenu = ({ updateComponentStyle, focusComponent }) => {
   return useMemo(
     () => (
       <Box display="flex" flexDirection="column">
-        <Box>Style:</Box>
+        <Box color="primary" fontWeight={500}>
+          Style:
+        </Box>
         <Box pl={3}>
           <InformationRow
             title="Type"
@@ -44,7 +46,9 @@ const EditLayoutInputMenu = ({ updateComponentStyle, focusComponent }) => {
           />
         </Box>
 
-        <Box>Container Style:</Box>
+        <Box color="primary" fontWeight={500}>
+          Container Style:
+        </Box>
         <Box pl={3}>
           <InformationRow
             title="Justify"

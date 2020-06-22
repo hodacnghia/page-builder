@@ -7,6 +7,11 @@ export const sizeData = [
   { key: "small", label: "small" },
   { key: "middle", label: "middle" },
 ];
+export const shapeData = [
+  { key: "circle", label: "circle" },
+  { key: "round", label: "round" },
+  { key: "omitted", label: "omitted" },
+];
 export const justifyData = [
   { key: "center", label: "center" },
   { key: "flex-start", label: "left" },

@@ -1,17 +1,19 @@
-import GridLayout from "react-grid-layout";
+import RGL, { WidthProvider } from "react-grid-layout";
 import React from "react";
 import { map } from "lodash";
 import Layout from "./components/Layout";
+import { Box } from "@xstyled/styled-components";
+const ReactGridLayout = WidthProvider(RGL);
 
 const PageBuilder = ({
-  onLayoutClick,
+  setFocusComponent,
   layout,
   updateComponent,
   focusComponentId,
   layoutMapData,
 }) => {
   const onItemClick = (key) => () => {
-    onLayoutClick(key);
+    setFocusComponent(key);
   };
   const generateDOM = () => {
     const h = layout.map((item) => ({ ...layoutMapData[item] }));
@@ -35,22 +37,24 @@ const PageBuilder = ({
   };
 
   return (
-    <GridLayout
-      onDragStop={(layout) => {
-        updateComponent(layout);
-      }}
-      onResizeStop={(layout) => {
-        updateComponent(layout);
-      }}
-      className="layout"
-      rowHeight={60}
-      width={900}
-      isDraggable
-      cols={10}
-      layout={layout.map((item) => ({ ...layoutMapData[item] }))}
-    >
-      {generateDOM()}
-    </GridLayout>
+    <Box backgroundColor="white" minHeight={500}>
+      <ReactGridLayout
+        onDragStop={(layout) => {
+          updateComponent(layout);
+        }}
+        onResizeStop={(layout) => {
+          updateComponent(layout);
+        }}
+        className="layout"
+        rowHeight={60}
+        // width={910}
+        isDraggable
+        cols={10}
+        layout={(layout || []).map((item) => ({ ...layoutMapData[item] }))}
+      >
+        {generateDOM()}
+      </ReactGridLayout>
+    </Box>
   );
 };
 export default PageBuilder;

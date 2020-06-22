@@ -29,7 +29,7 @@ const renderPicker = (type, props) => {
 const InformationRow = ({ title, type = "dropdown", ...props }: any) => {
   return (
     <Box display="flex" py={2} alignItems="center">
-      <Box display="flex" pr={1}>
+      <Box display="flex" pr={1} color="primary">
         {title}
       </Box>
       <Box display="flex" flexDirection="column" color="info">
