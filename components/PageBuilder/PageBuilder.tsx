@@ -12,7 +12,7 @@ const PageBuilder = ({
   layoutFocus,
   layoutsMapData,
 }: any) => {
-  console.log('render lai')
+  console.log("render lai");
   const onItemClick = (key) => () => {
     onLayoutClick(key);
   };
@@ -21,7 +21,7 @@ const PageBuilder = ({
 
     return map(layouts, function (item) {
       const layout = layoutsMapData[item];
-      console.log(layout,'????????????')
+      console.log(layout, "????????????");
       return (
         <div
           onClick={onItemClick(layout.i)}
@@ -41,7 +41,7 @@ const PageBuilder = ({
   };
 
   return (
-    <ResponsiveReactGridLayout
+    <GridLayout
       // onLayoutChange={(layout) => {
       //   console.log(layout);
       //   console.log(layoutsMapData[layout.i]);
@@ -65,7 +65,7 @@ const PageBuilder = ({
       // cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
     >
       {generateDOM()}
-    </ResponsiveReactGridLayout>
+    </GridLayout>
   );
 };
 export default PageBuilder;
