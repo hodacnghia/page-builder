@@ -5,8 +5,7 @@ This is a page-builder project, that can drag and resize component to custome la
 First, run the development server:
 
 ```bash
-npm run dev
-# or
+yarn
 yarn dev
 ```
 
