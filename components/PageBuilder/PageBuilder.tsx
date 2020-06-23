@@ -30,14 +30,14 @@ const PageBuilder = ({
             ...component.containerStyle,
           }}
         >
-          <Layout key={component.i} layout={component} />{" "}
+          <Layout key={component.i} layout={component} />
         </div>
       );
     });
   };
 
   return (
-    <Box backgroundColor="white" minHeight={500}>
+    <Box backgroundColor="white" minHeight={800}>
       <ReactGridLayout
         onDragStop={(layout) => {
           updateComponent(layout);

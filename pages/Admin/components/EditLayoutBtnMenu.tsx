@@ -12,6 +12,7 @@ const EditLayoutBtnMenu = ({ updateComponentStyle, focusComponent }) => {
   const { style, containerStyle } = focusComponent;
 
   const onChangeStyle = (styleKey) => (value) => {
+      console.log(value,'value')
     updateComponentStyle({
       ...focusComponent,
       style: {

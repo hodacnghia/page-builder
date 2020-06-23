@@ -36,7 +36,15 @@ export default () => {
 
   return (
     <Box display={loaded ? "flex" : "block"} p={2} opacity={loaded ? 1 : 0}>
-      <Box maxWidth={200} backgroundColor="white">
+      <Box
+        width={200}
+        height="100%"
+        backgroundColor="white"
+        display="flex"
+        position="sticky"
+        top={0}
+        zIndex={1000}
+      >
         <ComponentMenu
           {...{
             createComponent,
@@ -44,24 +52,26 @@ export default () => {
         />
       </Box>
       <Box
-        px={20}
+        px={10}
         display="flex"
         flexDirection="column"
         alignItems="stretch"
         flex={1}
         opacity={loaded ? 1 : 0}
       >
-        <OptionBar
-          {...{
-            undoLayout,
-            redoLayout,
-            saveLayout,
-            importFile,
-            deleteLayout,
-            history,
-            layout,
-          }}
-        />
+        <Box position="sticky" top={0} zIndex={1000}>
+          <OptionBar
+            {...{
+              undoLayout,
+              redoLayout,
+              saveLayout,
+              importFile,
+              deleteLayout,
+              history,
+              layout,
+            }}
+          />
+        </Box>
         <PageBuilder
           focusComponentId={focusComponentId}
           setFocusComponent={setFocusComponent}

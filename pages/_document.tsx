@@ -1,5 +1,6 @@
-import Document from "next/document";
+import Document, { NextScript, Main } from "next/document";
 import { ServerStyleSheet } from "styled-components";
+import { Head } from "next/document";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -26,5 +27,25 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+  render() {
+    return (
+      <>
+        <Head>
+          <title>Page Builder</title>
+        </Head>
+        <Main />
+        <NextScript />
+        <style jsx global>{`
+          /* Other global styles such as 'html, body' etc... */
+          body {
+            background-color: aliceblue;
+          }
+          #__next {
+            background-color: aliceblue;
+          }
+        `}</style>
+      </>
+    );
   }
 }

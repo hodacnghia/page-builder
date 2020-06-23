@@ -9,55 +9,53 @@ import React, { useState } from "react";
 import { Box } from "@xstyled/styled-components";
 
 const ComponentMenu = ({ createComponent }) => {
-  const [collapsed, setCollapsed] = useState(false);
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
   const onClick = ({ key }) => {
-    const props =
-      key === "Button"
-        ? {
-            style: {
-              size: "middle",
-              type: "primary",
-              text: "Button",
-              shape: 'omitted'
-            },
-            containerStyle: {
-              justifyContent: "center",
-              alignItems: "center",
-            },
-          }
-        : {
-            style: {
-              type: "text",
-            },
-            containerStyle: {
-              justifyContent: "center",
-              alignItems: "center",
-            },
-          };
+    let props = {};
+    switch (key) {
+      case "Button":
+        props = {
+          style: {
+            size: "middle",
+            type: "primary",
+            text: "Button",
+            shape: "omitted",
+          },
+          containerStyle: {
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        };
+        break;
+      case "TextInput":
+        props = {
+          style: {
+            type: "text",
+          },
+          containerStyle: {
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        };
+      case "Picture":
+        props = {
+          style: {
+            type: "text",
+          },
+          containerStyle: {
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        };
+      default:
+        break;
+    }
+
     createComponent(key, props);
   };
 
   return (
-    <div>
-      <Box display="flex" flex={1} pb={5} justifyContent="space-between">
-        <Button type="primary" onClick={toggleCollapsed}>
-          {React.createElement(
-            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined
-          )}
-        </Button>
-      </Box>
-
-      <Menu
-        mode="inline"
-        // theme="light"
-        inlineCollapsed={collapsed}
-        onClick={onClick}
-      >
+    <Box display="flex" flexDirection="column" flex={1} alignItem="stretch">
+      <Menu onClick={onClick}>
         <Menu.Item key="Button" icon={<DownSquareOutlined />}>
           Button
         </Menu.Item>
@@ -65,7 +63,7 @@ const ComponentMenu = ({ createComponent }) => {
           Text Input
         </Menu.Item>
       </Menu>
-    </div>
+    </Box>
   );
 };
 export default ComponentMenu;

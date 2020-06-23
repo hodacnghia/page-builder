@@ -97,13 +97,13 @@ export default () => {
     });
   };
   const updateComponentStyle = (component) => {
-    console.log(component, "layoutlayout");
+
     setLayoutMapData({
       ...layoutMapData,
       [component.i]: { ...layoutMapData[component.i], ...component },
     });
     onSaveHistory({
-      layout: component,
+      layout,
       layoutMapData: {
         ...layoutMapData,
         [component.i]: { ...layoutMapData[component.i], ...component },

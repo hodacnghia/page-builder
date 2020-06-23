@@ -51,7 +51,7 @@ const OptionBar = ({
       display="flex"
       width="100%"
       p={3}
-      pt={0}
+
       alignItems="center"
       backgroundColor="white"
       style={{
