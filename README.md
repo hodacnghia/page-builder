@@ -1,4 +1,4 @@
-This is a page-builder project use Nextjs with styled-component.
+This is a page-builder project, that can drag and resize component to custome layout.
 
 ## Getting Started
 
