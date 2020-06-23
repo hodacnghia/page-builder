@@ -43,9 +43,14 @@ const OptionBar = ({
     setFieldList([{ ...file, status: "done" }]);
   };
   const action = (file): Promise<any> => {
-    const [name, extendType] = file.name.split(".");
-    if (extendType === "json")
+    const nameArr = file.name.split(".");
+
+    if (nameArr[nameArr.length - 1] === "json") {
+      console.log("josssssssssssss");
       return new Promise((resolve) => resolve(file.name));
+    } else {
+      return new Promise((resolve, reject) => reject(file.name));
+    }
   };
   return (
     <Box
@@ -90,12 +95,17 @@ const OptionBar = ({
       <Button
         type="primary"
         ghost
+        disabled={(layout ?? []).length === 0}
         onClick={saveLayout}
         style={{ marginRight: 2 }}
       >
         Save
       </Button>
-      <Button danger disabled={layout.length === 0} onClick={deleteLayout}>
+      <Button
+        danger
+        disabled={(layout ?? []).length === 0}
+        onClick={deleteLayout}
+      >
         Delete All
       </Button>
     </Box>

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import EditLayoutMenu from "./components/EditLayoutMenu";
 import usePageBuilder from "./hooks/usePageBuilder";
 import OptionBar from "./components/OptionBar";
+import { Modal } from "antd";
 
 export default () => {
   const [loaded, setLoaded] = useState(false);
@@ -24,7 +25,25 @@ export default () => {
     deleteLayout,
     history,
     deleteComponent,
+    error,
   } = usePageBuilder();
+  const [visibleModal, setVisibleModal] = useState<any>(false);
+
+  useEffect(() => {
+    // Set timeout to avoid grid build break UI
+    if (error) {
+      setTimeout(() => {
+        warning();
+      }, 500);
+    }
+  }, [error]);
+
+  const warning = () => {
+    Modal.warning({
+      title: "Something when wrong",
+      content: "File import cant be read. Please import another file.",
+    });
+  };
 
   useEffect(() => {
     // Set timeout to avoid grid build break UI
@@ -32,7 +51,6 @@ export default () => {
       setLoaded(true);
     }, 500);
   }, []);
-
   return (
     <Box display={loaded ? "flex" : "block"} p={2} opacity={loaded ? 1 : 0}>
       <Box

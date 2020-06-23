@@ -49,7 +49,7 @@ const ComponentMenu = ({ createComponent }) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" flex={1} alignItem="stretch">
+    <Box display="flex" flexDirection="column" flex={1}>
       <Menu onClick={onClick}>
         <Menu.Item key="Button" icon={<DownSquareOutlined />}>
           Button

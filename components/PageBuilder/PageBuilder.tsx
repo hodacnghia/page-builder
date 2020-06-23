@@ -16,7 +16,7 @@ const PageBuilder = ({
     setFocusComponent(key);
   };
   const generateDOM = () => {
-    const h = layout.map((item) => ({ ...layoutMapData[item] }));
+    const h = (layout ?? []).map((item) => ({ ...layoutMapData[item] }));
     return map(h, function (component) {
       return (
         <div

@@ -5,6 +5,7 @@ import { reduce, filter, throttle } from "lodash";
 export default () => {
   const [focusComponentId, setFocusedComponentId] = useState(null);
   const [layout, setLayout] = useState<any>([]);
+  const [error, setError] = useState<any>("");
   const [layoutMapData, setLayoutMapData] = useState<any>([]);
   const { onSaveHistory, history, onUndo, onRedo } = useHistory({
     setLayout,
@@ -35,7 +36,9 @@ export default () => {
         onSaveHistory(obj);
         setLayoutMapData(obj.layoutMapData);
         setLayout(obj.layout);
-      } catch (error) {}
+      } catch (error) {
+        setError(error);
+      }
     };
     reader.readAsText(file);
   };
@@ -145,5 +148,6 @@ export default () => {
     layoutMapData,
     history,
     deleteComponent,
+    error,
   };
 };
