@@ -10,7 +10,7 @@ export default () => {
     setLayout,
     setLayoutMapData,
   });
-  console.log(history, "history");
+
   const saveLayout = () => {
     const obj = history.present;
     const blob = new Blob([JSON.stringify(obj, null, 2)], {
