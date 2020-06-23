@@ -25,9 +25,10 @@ const OptionBar = ({
   layout,
 }) => {
   const [fileList, setFieldList] = useState([]);
+
   const handleChange = (info) => {
     let fileList = [...info.fileList];
-    console.log(fileList, "fileList");
+
     // 1. Limit the number of uploaded files
     // Only to show two recent uploaded files, and old ones will be replaced by the new
     const file = fileList[fileList.length - 1];
@@ -51,7 +52,6 @@ const OptionBar = ({
       display="flex"
       width="100%"
       p={3}
-
       alignItems="center"
       backgroundColor="white"
       style={{

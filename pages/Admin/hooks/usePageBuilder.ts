@@ -97,7 +97,6 @@ export default () => {
     });
   };
   const updateComponentStyle = (component) => {
-
     setLayoutMapData({
       ...layoutMapData,
       [component.i]: { ...layoutMapData[component.i], ...component },
@@ -118,7 +117,7 @@ export default () => {
   };
   const deleteComponent = (focusComponent) => {
     const newLayout = filter(layout, (compId) => compId !== focusComponent.i);
-    console.log(newLayout, "newLayout");
+
     const newLayoutsMapData = layoutMapData;
     delete newLayoutsMapData[focusComponent.i];
     setLayout(newLayout);

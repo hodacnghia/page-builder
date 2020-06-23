@@ -1,11 +1,6 @@
-import { Menu, Button } from "antd";
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  DownSquareOutlined,
-  EditOutlined,
-} from "@ant-design/icons";
-import React, { useState } from "react";
+import { Menu } from "antd";
+import { DownSquareOutlined, EditOutlined } from "@ant-design/icons";
+import React from "react";
 import { Box } from "@xstyled/styled-components";
 
 const ComponentMenu = ({ createComponent }) => {

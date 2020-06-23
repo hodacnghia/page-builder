@@ -4,7 +4,6 @@ import { Box } from "@xstyled/styled-components";
 import { useState, useEffect } from "react";
 import EditLayoutMenu from "./components/EditLayoutMenu";
 import usePageBuilder from "./hooks/usePageBuilder";
-
 import OptionBar from "./components/OptionBar";
 
 export default () => {
