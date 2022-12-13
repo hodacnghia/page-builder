@@ -13,7 +13,7 @@
     "antd": "^4.3.4",
     "antd-img-crop": "^3.9.0",
     "cookie-parser": "^1.4.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "lodash": "^4.17.15",
     "next": "9.4.4",
     "next-routes": "^1.4.2",
